@@ -8,7 +8,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Picker } from '@react-native-community/picker'
 import DropDownPicker from "react-native-dropdown-picker";
+
 
 const CATEGORIES = [
   { id: "1", label: "Relationship", value: "Relationship" },
@@ -26,7 +28,7 @@ const GENDERS = [
 const Category = ({ item, onPress, backgroundColor, textColor, selected }) => (
   <TouchableOpacity
     onPress={onPress}
-    style={[styles.category, backgroundColor]}
+    style={[styles.input, backgroundColor]}
   >
     <View style={styles.otherContainer}>
       <Text style={[styles.title, textColor]}>{item.label}</Text>
@@ -76,31 +78,35 @@ const ServiceScreen = ({ name }) => {
         <Text style={styles.question}>What is on your mind today?</Text>
       </View>
       <View style={styles.categoryContainer}>
-        <Text style={styles.question}>Choose your category</Text>
+        <Text style={styles.questionCategory}>Choose your category</Text>
         <FlatList
           data={CATEGORIES}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
+          style={styles.list}
         />
       </View>
       <View style={styles.preferenceContainer}>
-        <Text style={styles.question}>Preference</Text>
-        <DropDownPicker
-          containerStyle={styles.containerStyle}
-          dropDownContainerStyle={{
-            width: 350,
-            borderRadius: 15,
-          }}
-          open={open}
-          value={genderPreference}
-          items={GENDERS}
-          setOpen={setOpen}
-          setValue={setGenderPreference}
-          dropDownDirection="BOTTOM"
-        />
+        <View style={{display: 'flex', 
+                      flexDirection: 'row', width: '100%', 
+                      justifyContent: 'flex-start', 
+                      alignItems: 'center', 
+                      paddingLeft: 10,
+                      marginTop: 20}}>
+            <Text style={styles.fieldText}>Gender Preference</Text>
+            <Picker
+                selectedValue={genderPreference}
+                style={styles.picker}
+                onValueChange={(itemValue, itemIndex) => setGenderPreference(itemValue)}
+            >
+                <Picker.Item label="Male" value="male" />
+                <Picker.Item label="Female" value="female" />
+                <Picker.Item label="I prefer not to say" value="na" />
+            </Picker>
+        </View>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.matchButton} onPress={handleFindMatch}>
+        <TouchableOpacity style={styles.button} onPress={handleFindMatch}>
           <Text style={styles.buttonText}>Start Match!</Text>
         </TouchableOpacity>
       </View>
@@ -114,13 +120,18 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
+    backgroundColor: 'white'
   },
   welcomeContainer: {
     margin: 20,
   },
   categoryContainer: {
     marginTop: 5,
-    marginLeft: 20,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    marginLeft: '10%'
   },
   preferenceContainer: {
     marginTop: 10,
@@ -136,11 +147,17 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     marginTop: 10,
   },
+  questionCategory: {
+    fontSize: 20,
+    fontStyle: "italic",
+    marginTop: 10,
+    marginLeft: '-20%'
+  },
   buttonContainer: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 150,
+    marginTop: 100,
   },
   matchButton: {
     height: 40,
@@ -151,10 +168,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  buttonText: {
-    fontSize: 20,
-    textAlign: "center",
-  },
+ 
   category: {
     width: 350,
     padding: 15,
@@ -177,6 +191,80 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginTop: 10,
   },
+  roleButton: {
+    width: "40%",
+    height: 50,
+    backgroundColor: "#D1EBB1",
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 10,
+    borderColor: "#687C15",
+    borderStyle: 'solid',
+    borderWidth: 4
+
+  },
+  selectedRoleButton: {
+      width: "40%",
+      height: 50,
+      backgroundColor: "#D1EBB1",
+      borderRadius: 30,
+      justifyContent: "center",
+      alignItems: "center",
+      margin: 10,
+      borderColor: "white",
+
+  },
+  fieldText: {
+    fontSize: 15,
+    width: 100
+  },
+
+  picker: {
+      height: 50,
+      width: 200,
+      margin: 10,
+      marginRight: 0,
+      paddingRight: 10,
+      borderWidth: 3,
+      borderColor: "#CBCBCB",
+      borderRadius: 50,
+      marginTop: "5%",
+      paddingLeft: 20,
+  },
+  input: {
+    backgroundColor: "white",
+    width: "80%",
+    height: 50,
+    borderWidth: 3,
+    borderColor: "#CBCBCB",
+    borderRadius: 50,
+    marginTop: "5%",
+    paddingLeft: 20,
+    textAlign: 'center'
+  },  
+
+  list: {
+    width: '100%',
+ 
+  },
+  button: {
+    width: "50%",
+    height: 50,
+    backgroundColor: "#D1EBB1",
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 10,
+  },
+
+  buttonText: {
+      fontSize: 20,
+      color: "#687C15",
+      textAlign: "center",
+      fontWeight: "bold"
+  },
+
 });
 
 export default ServiceScreen;

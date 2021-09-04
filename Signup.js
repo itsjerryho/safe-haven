@@ -110,14 +110,14 @@ const Signup = ({navigation}) => {
                     style={(role === 'consultant') ? styles.roleButton : styles.selectedRoleButton}
                     onPress={() => setRole('consultant')}
                 >
-                    <Text style={styles.buttonText}>Consultant</Text>
+                    <Text style={styles.roleText}>Consultant</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={(role === 'consultee') ? styles.roleButton : styles.selectedRoleButton}
                     onPress={() => setRole('consultee')}
                     onFocus={()=> styles.selectedRoleButton}
                 >
-                    <Text style={styles.buttonText}>Consultee</Text>
+                    <Text style={styles.roleText}>Consultee</Text>
                 </TouchableOpacity>
             </View>
 
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     button: {
         width: "50%",
         height: 50,
-        backgroundColor: "#D1EBB1",
+        backgroundColor: "#C4C4E8",
         borderRadius: 30,
         justifyContent: "center",
         alignItems: "center",
@@ -163,6 +163,13 @@ const styles = StyleSheet.create({
     },
 
     buttonText: {
+        fontSize: 20,
+        color: "#59599D",
+        textAlign: "center",
+        fontWeight: "bold"
+    },
+
+    roleText: {
         fontSize: 20,
         color: "#687C15",
         textAlign: "center",
@@ -200,12 +207,12 @@ const styles = StyleSheet.create({
     roleButton: {
         width: "40%",
         height: 50,
-        backgroundColor: "white",
+        backgroundColor: "#D1EBB1",
         borderRadius: 30,
         justifyContent: "center",
         alignItems: "center",
         margin: 10,
-        borderColor: "#D1EBB1",
+        borderColor: "#687C15",
         borderStyle: 'solid',
         borderWidth: 4
 

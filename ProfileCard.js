@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 15,
     borderWidth: 2,
-    backgroundColor: "#fdd7e4",
+    backgroundColor: "#D1EBB1",
   },
   text: {
     paddingHorizontal: 10,

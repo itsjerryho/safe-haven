@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
+import { Picker } from '@react-native-community/picker'
 
 const GENDERS = [
   { label: "Male", value: "Male" },
@@ -40,44 +41,48 @@ const ConsulteeProfile = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={styles.header}>Sign up as a consultee!</Text>
+        <Text style={styles.header}>Complete your profile!</Text>
         <Text style={styles.subHeader}>
           Hello! we would like to get to know you better
         </Text>
       </View>
       <TextInput
-        style={styles.textInput}
+        style={styles.input}
         value={name}
         onChangeText={setName}
         placeholder="Name"
       />
       <TextInput
-        style={styles.textInput}
+        style={styles.input}
         keyboardType="numeric"
         placeholder="Age"
         value={age}
         onChangeText={setAge}
       />
-      <DropDownPicker
-        containerStyle={styles.containerStyle}
-        dropDownContainerStyle={{
-          width: 300,
-          borderRadius: 15,
-        }}
-        open={open}
-        value={gender}
-        items={GENDERS}
-        setOpen={setOpen}
-        setValue={setGender}
-        dropDownDirection="BOTTOM"
-      />
+      <View style={{display: 'flex', 
+                  flexDirection: 'row', width: '100%', 
+                  justifyContent: 'flex-start', 
+                  alignItems: 'center', 
+                  paddingLeft: 30,
+                  marginTop: 20}}>
+        <Text style={styles.fieldText}>Gender</Text>
+        <Picker
+            selectedValue={gender}
+            style={styles.picker}
+            onValueChange={(itemValue, itemIndex) => setGender(itemValue)}
+        >
+            <Picker.Item label="Male" value="male" />
+            <Picker.Item label="Female" value="female" />
+            <Picker.Item label="I prefer not to say" value="na" />
+        </Picker>
+     </View>
       <View style={{ marginTop: 20 }}>
         <Text style={styles.disclaimer}>
           Don't worry! You will be staying anonymous!
         </Text>
       </View>
-      <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
-        <Text style={styles.signupText}>Sign up</Text>
+      <TouchableOpacity style={styles.button} onPress={handleSignup}>
+        <Text style={styles.buttonText}>Complete</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -93,6 +98,7 @@ const styles = StyleSheet.create({
     height: "100%",
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: 'white'
   },
   headerContainer: {
     marginTop: 10,
@@ -100,10 +106,11 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 30,
-    fontStyle: "italic",
-    marginTop: 10,
-    marginBottom: 10,
-    fontWeight: "bold",
+    color: "#687C15",
+    textAlign: "center",
+    marginTop: "10%",
+    marginBottom: "5%",
+    fontWeight: "bold"
   },
   subHeader: {
     fontSize: 15,
@@ -112,31 +119,56 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: "center",
   },
-  textInput: {
-    color: "black",
-    width: 300,
-    height: 50,
-    margin: 10,
-    padding: 10,
-    borderWidth: 1,
-    borderRadius: 15,
-  },
+ 
   containerStyle: {
     width: 300,
     borderRadius: 20,
-    margin: 10,
+    margin: 30,
   },
-  signupButton: {
-    height: 40,
-    width: 150,
-    borderWidth: 1,
-    borderRadius: 15,
-    marginTop: 10,
+  button: {
+    width: "50%",
+    height: 50,
+    backgroundColor: "#D1EBB1",
+    borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 30,
+    margin: 10,
   },
-  signupText: {
-    fontSize: 20,
-    textAlign: "center",
+
+  buttonText: {
+      fontSize: 20,
+      color: "#687C15",
+      textAlign: "center",
+      fontWeight: "bold"
+  },
+
+  input: {
+    backgroundColor: "white",
+    width: "80%",
+    height: 50,
+    borderWidth: 3,
+    borderColor: "#CBCBCB",
+    borderRadius: 50,
+    marginTop: "5%",
+    paddingLeft: 20,
+  },  
+  fieldText: {
+    fontSize: 15,
+    width: 100,
+    paddingLeft: 10
+  },
+
+  picker: {
+      height: 50,
+      width: 195,
+      margin: 10,
+      marginRight: 0,
+      paddingRight: 10,
+      borderWidth: 3,
+      borderColor: "#CBCBCB",
+      borderRadius: 50,
+      marginTop: "5%",
+      paddingLeft: 20,
   },
 });
