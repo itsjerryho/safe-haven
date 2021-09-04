@@ -26,7 +26,7 @@ const GENDERS = [
 const Category = ({ item, onPress, backgroundColor, textColor, selected }) => (
   <TouchableOpacity
     onPress={onPress}
-    style={[styles.category, backgroundColor]}
+    style={[styles.category, selected ? styles.selectedCategory : ""]}
   >
     <View style={styles.otherContainer}>
       <Text style={[styles.title, textColor]}>{item.label}</Text>
@@ -55,8 +55,8 @@ const ServiceScreen = ({ name }) => {
 
   const renderItem = ({ item }) => {
     const isSelected = item.id === selectedId;
-    const backgroundColor = isSelected ? "#cdcdcd" : "#ffffff";
-    const color = isSelected ? "white" : "black";
+    const backgroundColor = isSelected ? "#D1EBB1" : "#ffffff";
+    const color = "black";
 
     return (
       <Category
@@ -73,7 +73,9 @@ const ServiceScreen = ({ name }) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.welcomeContainer}>
         <Text style={styles.welcomeMessage}>Hi {name}</Text>
-        <Text style={styles.question}>What is on your mind today?</Text>
+        <Text style={styles.question}>
+          What would you like to talk about today?
+        </Text>
       </View>
       <View style={styles.categoryContainer}>
         <Text style={styles.question}>Choose your category</Text>
@@ -86,10 +88,13 @@ const ServiceScreen = ({ name }) => {
       <View style={styles.preferenceContainer}>
         <Text style={styles.question}>Preference</Text>
         <DropDownPicker
+          style={{ borderColor: "#D1EBB1", borderWidth: 2 }}
           containerStyle={styles.containerStyle}
           dropDownContainerStyle={{
             width: 350,
             borderRadius: 15,
+            borderWidth: 2,
+            borderColor: "#D1EBB1",
           }}
           open={open}
           value={genderPreference}
@@ -114,9 +119,10 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
+    backgroundColor: "#ffffff",
   },
   welcomeContainer: {
-    margin: 20,
+    margin: 10,
   },
   categoryContainer: {
     marginTop: 5,
@@ -128,7 +134,8 @@ const styles = StyleSheet.create({
   },
   welcomeMessage: {
     fontSize: 30,
-    fontStyle: "italic",
+    color: "#687C15",
+    marginBottom: "2%",
     fontWeight: "bold",
   },
   question: {
@@ -140,27 +147,28 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 150,
+    marginTop: 100,
   },
   matchButton: {
-    height: 40,
-    width: 150,
-    borderWidth: 1,
-    borderRadius: 15,
-    marginTop: 10,
+    width: "50%",
+    height: 50,
+    backgroundColor: "#D1EBB1",
+    borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 30,
+    margin: 10,
   },
   buttonText: {
-    fontSize: 20,
-    textAlign: "center",
+    fontSize: 15,
   },
   category: {
     width: 350,
     padding: 15,
     marginVertical: 8,
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 15,
+    borderColor: "#D1EBB1",
   },
   otherContainer: {
     display: "flex",
@@ -176,6 +184,10 @@ const styles = StyleSheet.create({
     width: 350,
     borderRadius: 15,
     marginTop: 10,
+  },
+  selectedCategory: {
+    borderColor: "#ffffff",
+    backgroundColor: "#D1EBB1",
   },
 });
 
