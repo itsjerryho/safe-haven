@@ -2,19 +2,26 @@ import React, { Component, useState } from "react";
 import { TouchableWithoutFeedback, Keyboard } from "react-native";
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database";
+import { NavigationContainer } from "@react-navigation/native";
+
+
+
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBjro67Rf_Y2diw602gk5uVQcABE0nhT-g",
-  authDomain: "safe-haven-4131e.firebaseapp.com",
-  projectId: "safe-haven-4131e",
-  storageBucket: "safe-haven-4131e.appspot.com",
-  messagingSenderId: "440482454181",
-  appId: "1:440482454181:web:9c4fa813db716c5fac0b4c"
+    apiKey: "AIzaSyBjro67Rf_Y2diw602gk5uVQcABE0nhT-g",
+    authDomain: "safe-haven-4131e.firebaseapp.com",
+    databaseURL: "https://safe-haven-4131e-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "safe-haven-4131e",
+    storageBucket: "safe-haven-4131e.appspot.com",
+    messagingSenderId: "440482454181",
+    appId: "1:440482454181:web:9c4fa813db716c5fac0b4c"
 };
 
 const app = initializeApp(firebaseConfig);
-
+const database = getDatabase();
+/*
 const DismissKeyboardHOC = (Comp) => {
     return ({ children, ...props }) => (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -23,19 +30,14 @@ const DismissKeyboardHOC = (Comp) => {
     );
   };
 const DismissKeyboardView = DismissKeyboardHOC(View);
-
-const config = {
-    iosClientId:
-        "440482454181-3p6h52gla2c4hdqs8e3ddjc4sugbimb8.apps.googleusercontent.com",
-    scopes: ["profie", "email"]
-}
-
-function signUp(email, password) {
+*/
+function signUp(email, password, username) {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
+        user.displayName = username;
         // ...
     })
     .catch((error) => {
@@ -48,15 +50,42 @@ function signUp(email, password) {
 }
 
 
-const Signup = () => {
+
+function writeUserData(userId, name, email, role) {
+    const db = getDatabase();
+    set(ref(db, 'users/' + userId), {
+      username: name,
+      email: email,
+      role: role
+    });
+}
+
+
+const Signup = ({navigation}) => {
+
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // User is signed in, see docs for a list of available properties
+            // https://firebase.google.com/docs/reference/js/firebase.User
+            const uid = user.uid;
+            writeUserData(uid, user.displayName, user.email, role);
+            
+            // ...
+        } else {
+            // User is signed out
+            // ...
+        }
+    });
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [role, setRole] = useState('consultant');
     
     return (
-        <DismissKeyboardView style={styles.form}>
+        // <DismissKeyboardView style={styles.form}>
           
             <View style={styles.form}>
                 <Text style={styles.header}>Sign Up</Text>
@@ -64,32 +93,39 @@ const Signup = () => {
                     style={styles.input}
                     placeholder="Username"
                     onChangeText={username => setUsername(username)}
+                    defaultValue={username}
                 ></TextInput>
                 <TextInput 
                     style={styles.input}
                     placeholder="Email"
                     onChangeText={email => setEmail(email)}
+                    defaultValue={email}
                 ></TextInput>
                 <TextInput 
                     style={styles.input}
                     placeholder="New Password"
                     onChangeText={password => setPassword(password)}
+                    defaultValue={password}
                 ></TextInput>
                 <TextInput 
                     style={styles.input}
                     placeholder="Confirm Password"
                     onChangeText={confirmPassword => setConfirmPassword(confirmPassword)}
+                    defaultValue={confirmPassword}
                 ></TextInput>
 
                 <Text style={styles.body}>I want to be a</Text>
                 <View style={styles.roleContainer}>
                     <TouchableOpacity
-                        style={styles.roleButton}
+                        style={(role === 'consultant') ? styles.roleButton : styles.selectedRoleButton}
+                        onPress={() => setRole('consultant')}
                     >
                         <Text style={styles.buttonText}>Consultant</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={styles.roleButton}
+                        style={(role === 'consultee') ? styles.roleButton : styles.selectedRoleButton}
+                        onPress={() => setRole('consultee')}
+                        onFocus={()=> styles.selectedRoleButton}
                     >
                         <Text style={styles.buttonText}>Consultee</Text>
                     </TouchableOpacity>
@@ -97,14 +133,21 @@ const Signup = () => {
 
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={signUp(email, password)}
+                    onPress={
+                        () => signUp(email, password, username),
+                        () => {
+                            if (role === 'consultant') {
+                                navigation.navigate("ConsultantProfile")
+                            }
+                        }
+                    }
                 >
                     <Text style={styles.buttonText}>Sign Up</Text>
                 </TouchableOpacity>
 
             </View>
             
-        </DismissKeyboardView>
+        // </DismissKeyboardView>
     );
 }
 
@@ -146,14 +189,10 @@ const styles = StyleSheet.create({
     input: {
         backgroundColor: "white",
         width: "80%",
-        height: 45,
+        height: 50,
         borderWidth: 3,
         borderColor: "#CBCBCB",
         borderRadius: 50,
-        shadowColor: "black",
-        shadowRadius: 2,
-        shadowOffset: {width: 3,height: 3},
-        shadowOpacity: 0.2,
         marginTop: "5%",
         paddingLeft: 20,
     },
