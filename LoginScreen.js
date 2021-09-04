@@ -7,9 +7,25 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { initializeApp } from "firebase/app";
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { getDatabase, ref, set, onValue } from "firebase/database";
 
-export const LoginScreen = () => {
-  const [username, setUsername] = useState("");
+const firebaseConfig = {
+    apiKey: "AIzaSyBjro67Rf_Y2diw602gk5uVQcABE0nhT-g",
+    authDomain: "safe-haven-4131e.firebaseapp.com",
+    databaseURL: "https://safe-haven-4131e-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "safe-haven-4131e",
+    storageBucket: "safe-haven-4131e.appspot.com",
+    messagingSenderId: "440482454181",
+    appId: "1:440482454181:web:9c4fa813db716c5fac0b4c"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase();
+
+const LoginScreen = ({navigation}) => {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [shouldShowError, setShouldShowError] = useState(false);
 
@@ -19,7 +35,7 @@ export const LoginScreen = () => {
 
     setShouldShowError(false);
 
-    const trimmedUsername = username.trim();
+    const trimmedUsername = email.trim();
     const trimmedPassword = password.trim();
 
     if (!trimmedUsername || !trimmedPassword) {
@@ -31,8 +47,36 @@ export const LoginScreen = () => {
     // if successful --> redirect to next screen
     // Otherwise --> show error
 
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        const uid = user.uid;
+        console.log('sign in success')
+
+        const db = getDatabase();
+        const userRef = ref(db, 'users/' +uid);
+        onValue(userRef, (snapshot) => {
+          const data = snapshot.val();
+          const role = data.role;
+          if (role === 'consultant') {
+            navigation.navigate('Home')
+          } else {
+            navigation.navigate('Service')
+          }
+        });
+        
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage)
+      });
+
     // reset input
-    setUsername("");
+    setEmail("");
     setPassword("");
   };
 
@@ -41,9 +85,9 @@ export const LoginScreen = () => {
       <Text style={styles.header}>Login</Text>
       <TextInput
         style={styles.textInput}
-        value={username}
-        onChangeText={setUsername}
-        placeholder="Username"
+        value={email}
+        onChangeText={setEmail}
+        placeholder="Email"
       />
       <TextInput
         style={styles.textInput}
@@ -63,7 +107,7 @@ export const LoginScreen = () => {
       <View style={styles.redirectText}>
         <Text>Do not have an account? </Text>
         <TouchableOpacity
-          onPress={() => console.log("Redirect to sign up screen")}
+          onPress={() => navigation.navigate("Signup")}
         >
           <Text style={styles.underlined}>Click here to sign up!</Text>
         </TouchableOpacity>
@@ -128,3 +172,5 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
 });
+
+export default LoginScreen;
