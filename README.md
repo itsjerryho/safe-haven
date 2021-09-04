@@ -1,4 +1,25 @@
 # safe-haven
+
+## Description:
+
+Safe-Haven is a mobile app that aims to provides a safe and anonymous place to connect teenagers aged 12 - 17 years old with trained professionals to talk about their troubles. 
+
+Be it stress from studies, troubles with relationships or family, Safe Haven aims to provide an easy way for teenagers to connect to professionals to voice out their troubles on the go. 
+
+We hope that by providing an listening ear and offering professional advices, they can feel better through voicing their thoughts out
+
+## Features:
+- Session-based anonymous chat
+- Match consultees with most suitable trained consultants
+
+Consultants:
+- As consultants may not be well-versed with offering advices in all areas, consultants have the option to pick whether he/she would like to accept the chat request
+
+Consultees:
+- Ability to select or indicate chat topic
+- Select preferred gender of consultants
+
+
 ## Building instructions
 * `npm install `
 * `expo start`
