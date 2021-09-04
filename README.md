@@ -1,5 +1,7 @@
 # safe-haven
-
+## Building instructions
+* `npm install `
+* `expo start`
 ## Sign up as a consultant
 <img width="231" alt="Screenshot 2021-09-05 at 4 41 56 AM" src="https://user-images.githubusercontent.com/66818697/132107622-531f6e74-0b7e-40ff-9d1e-94bc59e79c54.png"><img width="231" alt="Screenshot 2021-09-05 at 4 42 28 AM" src="https://user-images.githubusercontent.com/66818697/132107637-14e7aa4a-ad2b-4f55-bd60-553e10ba8c43.png"><img width="227" alt="Screenshot 2021-09-05 at 4 42 46 AM" src="https://user-images.githubusercontent.com/66818697/132107638-bd6bfb9d-5cfd-4423-b507-9642f819a95e.png"><img width="231" alt="Screenshot 2021-09-05 at 4 42 55 AM" src="https://user-images.githubusercontent.com/66818697/132107641-63ba0559-066b-4518-8c05-5c85a988eb2c.png">
 ## Match with a consultee
