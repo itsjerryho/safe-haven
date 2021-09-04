@@ -150,8 +150,12 @@ const styles = StyleSheet.create({
         width: 200,
         margin: 10,
         marginRight: 0,
-        paddingLeft: 10,
         paddingRight: 10,
+        borderWidth: 3,
+        borderColor: "#CBCBCB",
+        borderRadius: 50,
+        marginTop: "5%",
+        paddingLeft: 20,
     },
     button: {
         width: "50%",

@@ -55,23 +55,31 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     justifyContent: "center",
+    backgroundColor: 'white',
+    paddingBottom: 100
   },
   textContainer: {
     margin: 20,
   },
   name: {
     fontSize: 30,
-    fontStyle: "italic",
-    fontWeight: "bold",
+    color: "#687C15",
+    textAlign: "center",
+    marginTop: "10%",
+    marginBottom: "5%",
+    fontWeight: "bold"
   },
   detailText: {
     fontSize: 20,
-    fontStyle: "italic",
+    textAlign: "center",
   },
   issueText: {
-    fontSize: 20,
+    fontSize: 25,
     fontStyle: "italic",
     color: "#d62828",
+    margin: 10,
+    textAlign: 'center',
+    fontWeight: 'bold'
   },
   buttonContainer: {
     display: "flex",
@@ -79,16 +87,21 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   button: {
-    height: 40,
-    width: 150,
-    borderWidth: 1,
-    borderRadius: 15,
+    width: "50%",
+    height: 50,
+    backgroundColor: "#D1EBB1",
+    borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#ffffff",
+    marginTop: 30,
+    margin: 10,
   },
+
   buttonText: {
-    fontSize: 20,
+      fontSize: 20,
+      color: "#687C15",
+      textAlign: "center",
+      fontWeight: "bold"
   },
 });
 
