@@ -1,11 +1,76 @@
-import React, { Component, useState } from "react";
-import { TouchableWithoutFeedback, Keyboard } from "react-native";
+import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Picker } from '@react-native-community/picker'
+import { initializeApp } from "firebase/app";
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { getDatabase, ref, set, get } from "firebase/database";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBjro67Rf_Y2diw602gk5uVQcABE0nhT-g",
+    authDomain: "safe-haven-4131e.firebaseapp.com",
+    databaseURL: "https://safe-haven-4131e-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "safe-haven-4131e",
+    storageBucket: "safe-haven-4131e.appspot.com",
+    messagingSenderId: "440482454181",
+    appId: "1:440482454181:web:9c4fa813db716c5fac0b4c"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase();
+
+function updateUser(uid, username, email, role, gender, yearOfExperience) {
+  
+    // A post entry.
+    const userData = {
+      name: username,
+      uid: uid,
+      email: email,
+      role: role,
+      gender: gender,
+      yearOfExperience: yearOfExperience
+    };
+  
+    // Get a key for a new Post.
+    const newUserKey = push(child(ref(database), 'users')).key;
+  
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    const updates = {};
+    updates['/users/' + newUserKey] = userData;
+  
+    return update(ref(database), updates);
+}
 
 const ConsultantProfile = () => {
     const [gender, setGender] = useState("Male");
     const [year, setYear] = useState("< 1 year");
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [role, setRole] = useState('');
+    
+    const dbRef = ref(getDatabase());    
+
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            const uid = user.uid;
+            get(child(dbRef, `users/${uid}`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    console.log(snapshot.val());
+                    setUsername = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+                    setEmail = (snapshot.val() && snapshot.val().email) || '';
+                    setRole = (snapshot.val() && snapshot.val().role) || '';
+                } else {
+                    console.log("No data available");
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
+            updateUser(uid, username, role, gender, year);
+            
+        } else {
+            // User is signed out
+        }
+    });
 
     return(
         <View style={styles.container}>

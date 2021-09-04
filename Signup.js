@@ -1,13 +1,8 @@
-import React, { Component, useState } from "react";
-import { TouchableWithoutFeedback, Keyboard } from "react-native";
-import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
-import { NavigationContainer } from "@react-navigation/native";
-
-
-
 
 const firebaseConfig = {
     apiKey: "AIzaSyBjro67Rf_Y2diw602gk5uVQcABE0nhT-g",
@@ -37,7 +32,6 @@ function signUp(email, password, username) {
     .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
-        user.displayName = username;
         // ...
     })
     .catch((error) => {
@@ -66,15 +60,10 @@ const Signup = ({navigation}) => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            // User is signed in, see docs for a list of available properties
-            // https://firebase.google.com/docs/reference/js/firebase.User
             const uid = user.uid;
-            writeUserData(uid, user.displayName, user.email, role);
-            
-            // ...
+            writeUserData(uid, username, user.email, role);
         } else {
-            // User is signed out
-            // ...
+           
         }
     });
 
