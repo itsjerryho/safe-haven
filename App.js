@@ -6,7 +6,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import WelcomePage from './Welcome';
 import SignupPage from './Signup';
 import ConsultantProfile from './ConsultantProfile';
-import ConsulteeProfile from './ConsulteeProfile'
+import ConsulteeProfile from './ConsulteeProfile';
+import PostSignup from './PostSignup';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
@@ -39,6 +40,10 @@ export default function App() {
           <Stack.Screen
             name="ConsulteeProfile"
             component={ConsulteeProfile}
+          />
+          <Stack.Screen
+            name="PostSignup"
+            component={PostSignup}
           />
         </Stack.Navigator>
       </NavigationContainer>

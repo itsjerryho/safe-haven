@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from "reac
 import { Picker } from '@react-native-community/picker'
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { getDatabase, ref, set, get } from "firebase/database";
+import { getDatabase, ref, set, get, child, onValue, push, update } from "firebase/database";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBjro67Rf_Y2diw602gk5uVQcABE0nhT-g",
@@ -19,58 +19,54 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase();
 
 function updateUser(uid, username, email, role, gender, yearOfExperience) {
-  
-    // A post entry.
-    const userData = {
-      name: username,
-      uid: uid,
-      email: email,
-      role: role,
-      gender: gender,
-      yearOfExperience: yearOfExperience
-    };
-  
-    // Get a key for a new Post.
-    const newUserKey = push(child(ref(database), 'users')).key;
-  
-    // Write the new post's data simultaneously in the posts list and the user's post list.
-    const updates = {};
-    updates['/users/' + newUserKey] = userData;
-  
-    return update(ref(database), updates);
+
+    set(ref(database, 'users/' + uid), {
+        name: username,
+        uid: uid,
+        email: email,
+        role: role,
+        gender: gender,
+        yearOfExperience: yearOfExperience
+    })
+    .then(() => {
+        console.log("update success!")
+    })
+    .catch((error) => {
+        console.log("update failed because: " + error)
+    });
 }
 
-const ConsultantProfile = () => {
+const ConsultantProfile = ({navigation}) => {
     const [gender, setGender] = useState("Male");
     const [year, setYear] = useState("< 1 year");
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [role, setRole] = useState('');
-    
-    const dbRef = ref(getDatabase());    
 
+    var username = '';
+    var email = '';
+    var role = '';
+    var uid = '';
+      
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            const uid = user.uid;
-            get(child(dbRef, `users/${uid}`)).then((snapshot) => {
-                if (snapshot.exists()) {
-                    console.log(snapshot.val());
-                    setUsername = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-                    setEmail = (snapshot.val() && snapshot.val().email) || '';
-                    setRole = (snapshot.val() && snapshot.val().role) || '';
-                } else {
-                    console.log("No data available");
-                }
-            }).catch((error) => {
-                console.error(error);
+            uid = user.uid;
+
+            const userRef = ref(database, 'users/' + uid);
+            onValue(userRef, (snapshot) => {
+                console.log("user info gotten: " + snapshot.val());
+                username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+                email = (snapshot.val() && snapshot.val().email) || '';
+                role = (snapshot.val() && snapshot.val().role) || '';
             });
-            updateUser(uid, username, role, gender, year);
             
         } else {
             // User is signed out
         }
     });
+
+    function complete() {
+        updateUser(uid, email, username, role, gender, year);
+        navigation.navigate("PostSignup");
+    }
 
     return(
         <View style={styles.container}>
@@ -110,6 +106,14 @@ const ConsultantProfile = () => {
                     <Picker.Item label="> 5 years" value=">5" />
                 </Picker>
             </View>
+            <TouchableOpacity
+                    style={styles.button}
+                    onPress={ 
+                        () => complete()
+                    }
+                >
+                    <Text style={styles.buttonText}>Complete</Text>
+            </TouchableOpacity>
             
         </View>
     );
@@ -148,7 +152,24 @@ const styles = StyleSheet.create({
         marginRight: 0,
         paddingLeft: 10,
         paddingRight: 10,
-    }
+    },
+    button: {
+        width: "50%",
+        height: 50,
+        backgroundColor: "#D1EBB1",
+        borderRadius: 30,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 30,
+        margin: 10,
+    },
+
+    buttonText: {
+        fontSize: 20,
+        color: "#687C15",
+        textAlign: "center",
+        fontWeight: "bold"
+    },
 
 });
     
