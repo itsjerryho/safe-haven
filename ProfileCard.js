@@ -38,16 +38,18 @@ function ProfileCard({ profileDetails, navigation }) {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.profileWhole}>
-        <View style={styles.profileTop}>
-          <Text>Username: {profileDetails.name}</Text>
-          <Text>Age: {profileDetails.age}</Text>
+        <View style={styles.rowContainer}>
+          <Text style={styles.text}>{profileDetails.name}, </Text>
+          <Text>{profileDetails.age}</Text>
         </View>
-        <View>
-          <Text>{profileDetails.issue}</Text>
+        <View style={styles.rowContainer}>
+          <Text style={styles.text}>Issue: {profileDetails.issue}</Text>
           {ISSUE_ICONS[profileDetails.issue]}
         </View>
         <View>
-          <Text>{GENDER_ICONS[profileDetails.gender]}</Text>
+          <Text style={styles.text}>
+            Gender: {GENDER_ICONS[profileDetails.gender]}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -55,9 +57,10 @@ function ProfileCard({ profileDetails, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  profileTop: {
+  rowContainer: {
     display: "flex",
     flexDirection: "row",
+    paddingTop: 10,
   },
   profileWhole: {
     display: "flex",
@@ -68,6 +71,9 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     borderWidth: 2,
     backgroundColor: "#fdd7e4",
+  },
+  text: {
+    paddingHorizontal: 10,
   },
 });
 
