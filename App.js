@@ -11,6 +11,8 @@ import ConsultantProfile from './ConsultantProfile';
 import ConsulteeProfile from './ConsulteeProfile';
 import PostSignup from './PostSignup';
 import ServiceScreen from './ServiceScreen';
+import ProfileCard from './ProfileCard';
+import PersonDetails from './PersonDetails'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
@@ -59,6 +61,14 @@ export default function App() {
           <Stack.Screen
             name="Service"
             component={ServiceScreen}
+          />
+          <Stack.Screen
+            name="ProfileCard"
+            component={ProfileCard}
+          />
+          <Stack.Screen
+            name="Details"
+            component={PersonDetails}
           />
         </Stack.Navigator>
       </NavigationContainer>

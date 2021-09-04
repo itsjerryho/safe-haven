@@ -68,7 +68,9 @@ const Signup = ({navigation}) => {
     function onPressFunction() {
         signUp(email, password, username);
         if (role === 'consultant') {
-                    navigation.navigate("ConsultantProfile")   
+            navigation.navigate("ConsultantProfile")   
+        } else {
+            navigation.navigate("Service") 
         }
     }
     
