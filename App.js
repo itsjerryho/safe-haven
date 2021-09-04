@@ -1,35 +1,49 @@
-import * as React from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import PersonDetails from './PersonDetails';
-import HomeScreen from './HomeScreen';
+import { StyleSheet, Text, View } from 'react-native';
+import ChatStack from './components/ChatComponent/ChatStack'
 
-const Stack = createNativeStackNavigator();
+export default function App() {
+  const Tab = createBottomTabNavigator();
 
-function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            title: 'People Online',
-            headerStyle: {
-              backgroundColor: '#f4511e',
-            },
-            headerTintColor: '#fff',
-          }}
-        />
-        <Stack.Screen
-          name="Details"
-          component={PersonDetails}
-        />
-      </Stack.Navigator>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+            // tabBarIcon: ({ focused, color, size }) => {
+            //   let iconName;
+
+            //   if (route.name === "Explore") {
+            //     return <Feather name="search" size={24} color="black" />;
+            //   } 
+            // }
+        })}
+        tabBarOptions={{
+          activeTintColor: "blue",
+          inactiveTintColor: "gray",
+        }}
+      >
+        <Tab.Screen name="Chat" component={ChatStack} />
+        {/* <Tab.Screen name="Wishlist" component={WishlistStack} />
+        <Tab.Screen name="Inbox" component={InboxScreen} />
+        <Tab.Screen name="Profile" component={LoginStack} />
+        <Tab.Screen name="ProfileScreen" component={ProfileStack} /> */}
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
 
 
 export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#9fa3cc",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+
