@@ -28,8 +28,8 @@ export default function App() {
           inactiveTintColor: "gray",
         }}
       >
-        {/* <Tab.Screen name="Welcome" component={WelcomePage} />
-        <Tab.Screen name="Signup" component={SignupPage} /> */}
+        <Tab.Screen name="Welcome" component={WelcomePage} />
+        <Tab.Screen name="Signup" component={SignupPage} />
         <Tab.Screen name="ConsultantProfile" component={ConsultantProfile} />
         
       
