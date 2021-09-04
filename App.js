@@ -1,44 +1,67 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
 import WelcomePage from './Welcome';
 import SignupPage from './Signup';
 import ConsultantProfile from './ConsultantProfile';
+import ConsulteeProfile from './ConsulteeProfile';
 import PostSignup from './PostSignup';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 export default function App() {
-  const Tab = createBottomTabNavigator();
+  const Stack = createNativeStackNavigator();
+  //this should be updated from user on database
+  const [isRegistered, setRegistered] = useState(false)
 
-  return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-            // tabBarIcon: ({ focused, color, size }) => {
-            //   let iconName;
+  useEffect(() => {
+    console.log(isRegistered)
+  },[isRegistered])
 
-            //   if (route.name === "Explore") {
-            //     return <Feather name="search" size={24} color="black" />;
-            //   } 
-            // }
-        })}
-        tabBarOptions={{
-          activeTintColor: "blue",
-          inactiveTintColor: "gray",
-        }}
-      >
-        <Tab.Screen name="Welcome" component={WelcomePage} />
-        <Tab.Screen name="Signup" component={SignupPage} />
-        <Tab.Screen name="ConsultantProfile" component={ConsultantProfile} />
-        <Tab.Screen name="PostSignup" component={PostSignup} />
-        
-      
-      </Tab.Navigator>
-    </NavigationContainer>
-  );
+  const SignUpProcess = () => {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Welcome"
+            component={WelcomePage}
+          />
+          <Stack.Screen
+            name="Signup"
+            component={SignupPage}
+            initialParams={{setRegistered: setRegistered}}
+          />
+          <Stack.Screen
+            name="ConsultantProfile"
+            component={ConsultantProfile}
+          />
+          <Stack.Screen
+            name="ConsulteeProfile"
+            component={ConsulteeProfile}
+          />
+          <Stack.Screen
+            name="PostSignup"
+            component={PostSignup}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    )
+  }
+
+  if (!isRegistered) {
+    return <SignUpProcess />
+  } else {
+    return (
+      <View>
+        <Text>Hello world</Text>
+      </View>
+    )
+  }
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
