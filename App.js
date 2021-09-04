@@ -1,45 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
 import WelcomePage from './Welcome';
 import SignupPage from './Signup';
 import ConsultantProfile from './ConsultantProfile';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 export default function App() {
-  const Tab = createBottomTabNavigator();
+  const Stack = createNativeStackNavigator();
 
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-            // tabBarIcon: ({ focused, color, size }) => {
-            //   let iconName;
-
-            //   if (route.name === "Explore") {
-            //     return <Feather name="search" size={24} color="black" />;
-            //   } 
-            // }
-        })}
-        tabBarOptions={{
-          activeTintColor: "blue",
-          inactiveTintColor: "gray",
-        }}
-      >
-        <Tab.Screen name="Welcome" component={WelcomePage} />
-        <Tab.Screen name="Signup" component={SignupPage} />
-        <Tab.Screen name="ConsultantProfile" component={ConsultantProfile} />
-        
-      
-      </Tab.Navigator>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Welcome"
+          component={WelcomePage}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
 
-export default App;
 
 const styles = StyleSheet.create({
   container: {
