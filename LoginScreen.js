@@ -8,23 +8,29 @@ import {
   View,
 } from "react-native";
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { getDatabase, ref, set, onValue } from "firebase/database";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBjro67Rf_Y2diw602gk5uVQcABE0nhT-g",
-    authDomain: "safe-haven-4131e.firebaseapp.com",
-    databaseURL: "https://safe-haven-4131e-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "safe-haven-4131e",
-    storageBucket: "safe-haven-4131e.appspot.com",
-    messagingSenderId: "440482454181",
-    appId: "1:440482454181:web:9c4fa813db716c5fac0b4c"
+  apiKey: "AIzaSyBjro67Rf_Y2diw602gk5uVQcABE0nhT-g",
+  authDomain: "safe-haven-4131e.firebaseapp.com",
+  databaseURL:
+    "https://safe-haven-4131e-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "safe-haven-4131e",
+  storageBucket: "safe-haven-4131e.appspot.com",
+  messagingSenderId: "440482454181",
+  appId: "1:440482454181:web:9c4fa813db716c5fac0b4c",
 };
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase();
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [shouldShowError, setShouldShowError] = useState(false);
@@ -43,36 +49,33 @@ const LoginScreen = ({navigation}) => {
       return;
     }
 
-    // TODO: Handle login
-    // if successful --> redirect to next screen
-    // Otherwise --> show error
-
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in 
+        // Signed in
         const user = userCredential.user;
         const uid = user.uid;
-        console.log('sign in success')
+        console.log("sign in success");
 
         const db = getDatabase();
-        const userRef = ref(db, 'users/' +uid);
+        const userRef = ref(db, "users/" + uid);
         onValue(userRef, (snapshot) => {
           const data = snapshot.val();
           const role = data.role;
-          if (role === 'consultant') {
-            navigation.navigate('Home')
+          if (role === "consultant") {
+            navigation.navigate("Home");
           } else {
-            navigation.navigate('Service')
+            navigation.navigate("Service");
           }
         });
-        
+
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorMessage)
+        console.log(errorMessage);
+        setShouldShowError(true);
       });
 
     // reset input
@@ -106,9 +109,7 @@ const LoginScreen = ({navigation}) => {
       </TouchableOpacity>
       <View style={styles.redirectText}>
         <Text>Do not have an account? </Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Signup")}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
           <Text style={styles.underlined}>Click here to sign up!</Text>
         </TouchableOpacity>
       </View>
