@@ -9,8 +9,8 @@ Be it stress from studies, troubles with relationships or family, Safe Haven aim
 We hope that by providing an listening ear and offering professional advices, they can feel better through voicing their thoughts out
 
 ## Features:
-- Session-based anonymous chat
-- Match consultees with most suitable trained consultants
+- 1-1 Session-based anonymous chat
+- Match consultees with most suited trained consultants
 
 Consultants:
 - As consultants may not be well-versed with offering advices in all areas, consultants have the option to pick whether he/she would like to accept the chat request
