@@ -26,33 +26,7 @@ const DismissKeyboardHOC = (Comp) => {
   };
 const DismissKeyboardView = DismissKeyboardHOC(View);
 */
-function signUp(email, password, username) {
-    const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-        // Signed in 
-        const user = userCredential.user;
-        // ...
-    })
-    .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage);
-        // ..
-    });
-    console.log('new user signed up');
-}
 
-
-
-function writeUserData(userId, name, email, role) {
-    const db = getDatabase();
-    set(ref(db, 'users/' + userId), {
-      username: name,
-      email: email,
-      role: role
-    });
-}
 
 
 const Signup = ({navigation}) => {
@@ -61,7 +35,7 @@ const Signup = ({navigation}) => {
     onAuthStateChanged(auth, (user) => {
         if (user) {
             const uid = user.uid;
-            writeUserData(uid, username, user.email, role);
+            
         } else {
            
         }
@@ -72,6 +46,43 @@ const Signup = ({navigation}) => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [role, setRole] = useState('consultant');
+
+    function signUp(email, password, username) {
+        const auth = getAuth();
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            writeUserData(user.uid, username, email, role);
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorMessage);
+            // ..
+        });
+        console.log('new user signed up');
+    }
+    
+    
+    
+    function writeUserData(userId, name, email, role) {
+        const db = getDatabase();
+        set(ref(db, 'users/' + userId), {
+          username: name,
+          email: email,
+          role: role
+        });
+    }
+
+
+    function onPressFunction() {
+        signUp(email, password, username);
+        if (role === 'consultant') {
+                    navigation.navigate("ConsultantProfile")   
+        }
+    }
     
     return (
         // <DismissKeyboardView style={styles.form}>
@@ -123,12 +134,7 @@ const Signup = ({navigation}) => {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={
-                        () => signUp(email, password, username),
-                        () => {
-                            if (role === 'consultant') {
-                                navigation.navigate("ConsultantProfile")
-                            }
-                        }
+                        () => onPressFunction()
                     }
                 >
                     <Text style={styles.buttonText}>Sign Up</Text>

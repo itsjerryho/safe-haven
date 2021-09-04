@@ -6,6 +6,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import WelcomePage from './Welcome';
 import SignupPage from './Signup';
 import ConsultantProfile from './ConsultantProfile';
+import PostSignup from './PostSignup';
 
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
         <Tab.Screen name="Welcome" component={WelcomePage} />
         <Tab.Screen name="Signup" component={SignupPage} />
         <Tab.Screen name="ConsultantProfile" component={ConsultantProfile} />
+        <Tab.Screen name="PostSignup" component={PostSignup} />
         
       
       </Tab.Navigator>
