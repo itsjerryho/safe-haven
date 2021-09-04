@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -63,7 +63,7 @@ function writeUserData(userId, name, email, role) {
   });
 }
 
-const Signup = ({ navigation }) => {
+const Signup = ({ navigation, route }) => {
   const auth = getAuth();
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -141,6 +141,7 @@ const Signup = ({ navigation }) => {
           () => {
             if (role === "consultant") {
               navigation.navigate("ConsultantProfile");
+              route.params.setRegistered(true);
             }
           })
         }
