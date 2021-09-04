@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
@@ -12,10 +12,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
+  //this should be updated from user on database
+  const [isRegistered, setRegistered] = useState(false)
 
-  const isRegistered = false
-
-  console.log(isRegistered)
+  useEffect(() => {
+    console.log(isRegistered)
+  },[isRegistered])
 
   const SignUpProcess = () => {
     return (
@@ -28,7 +30,7 @@ export default function App() {
           <Stack.Screen
             name="Signup"
             component={SignupPage}
-            initialParams={{isRegistered: isRegistered}}
+            initialParams={{setRegistered: setRegistered}}
           />
           <Stack.Screen
             name="ConsultantProfile"

@@ -26,7 +26,7 @@ const DismissKeyboardHOC = (Comp) => {
   };
 const DismissKeyboardView = DismissKeyboardHOC(View);
 */
-function signUp(email, password, username, isRegistered) {
+function signUp(email, password, username, setRegistered) {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
@@ -40,7 +40,7 @@ function signUp(email, password, username, isRegistered) {
         console.log(errorMessage);
         // ..
     });
-    isRegistered = true
+    setRegistered(true)
     console.log('new user signed up');
 }
 
@@ -67,7 +67,7 @@ const Signup = (props) => {
            
         }
     });
-    const isRegistered = props.route.params.isRegistered
+    const setRegistered = props.route.params.setRegistered
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -125,12 +125,13 @@ const Signup = (props) => {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={
-                        () => signUp(email, password, username, isRegistered),
+                        () => setRegistered(true),
+                        () => signUp(email, password, username, setRegistered),
                         () => {
                             if (role === 'consultant') {
-                                props.navigation.navigate("ConsultantProfile", isRegistered)
+                                props.navigation.navigate("ConsultantProfile")
                             } else {
-                                props.navigation.navigate("ConsulteeProfile", isRegistered)
+                                props.navigation.navigate("ConsulteeProfile")
                             }
                         }
                     }
