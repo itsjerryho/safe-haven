@@ -106,12 +106,14 @@ const Signup = ({navigation}) => {
                     placeholder="New Password"
                     onChangeText={password => setPassword(password)}
                     defaultValue={password}
+                    secureTextEntry={true}
                 ></TextInput>
                 <TextInput 
                     style={styles.input}
                     placeholder="Confirm Password"
                     onChangeText={confirmPassword => setConfirmPassword(confirmPassword)}
                     defaultValue={confirmPassword}
+                    secureTextEntry={true}
                 ></TextInput>
 
                 <Text style={styles.body}>I want to be a</Text>
