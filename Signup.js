@@ -16,18 +16,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase();
-/*
-const DismissKeyboardHOC = (Comp) => {
-    return ({ children, ...props }) => (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <Comp {...props}>{children}</Comp>
-      </TouchableWithoutFeedback>
-    );
-  };
-const DismissKeyboardView = DismissKeyboardHOC(View);
-*/
-
-
 
 const Signup = ({navigation}) => {
 
@@ -85,66 +73,62 @@ const Signup = ({navigation}) => {
     }
     
     return (
-        // <DismissKeyboardView style={styles.form}>
-          
-            <View style={styles.form}>
-                <Text style={styles.header}>Sign Up</Text>
-                <TextInput 
-                    style={styles.input}
-                    placeholder="Username"
-                    onChangeText={username => setUsername(username)}
-                    defaultValue={username}
-                ></TextInput>
-                <TextInput 
-                    style={styles.input}
-                    placeholder="Email"
-                    onChangeText={email => setEmail(email)}
-                    defaultValue={email}
-                ></TextInput>
-                <TextInput 
-                    style={styles.input}
-                    placeholder="New Password"
-                    onChangeText={password => setPassword(password)}
-                    defaultValue={password}
-                    secureTextEntry={true}
-                ></TextInput>
-                <TextInput 
-                    style={styles.input}
-                    placeholder="Confirm Password"
-                    onChangeText={confirmPassword => setConfirmPassword(confirmPassword)}
-                    defaultValue={confirmPassword}
-                    secureTextEntry={true}
-                ></TextInput>
+        <View style={styles.form}>
+            <Text style={styles.header}>Sign Up</Text>
+            <TextInput 
+                style={styles.input}
+                placeholder="Username"
+                onChangeText={username => setUsername(username)}
+                defaultValue={username}
+            ></TextInput>
+            <TextInput 
+                style={styles.input}
+                placeholder="Email"
+                onChangeText={email => setEmail(email)}
+                defaultValue={email}
+            ></TextInput>
+            <TextInput 
+                style={styles.input}
+                placeholder="New Password"
+                onChangeText={password => setPassword(password)}
+                defaultValue={password}
+                secureTextEntry={true}
+            ></TextInput>
+            <TextInput 
+                style={styles.input}
+                placeholder="Confirm Password"
+                onChangeText={confirmPassword => setConfirmPassword(confirmPassword)}
+                defaultValue={confirmPassword}
+                secureTextEntry={true}
+            ></TextInput>
 
-                <Text style={styles.body}>I want to be a</Text>
-                <View style={styles.roleContainer}>
-                    <TouchableOpacity
-                        style={(role === 'consultant') ? styles.roleButton : styles.selectedRoleButton}
-                        onPress={() => setRole('consultant')}
-                    >
-                        <Text style={styles.buttonText}>Consultant</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={(role === 'consultee') ? styles.roleButton : styles.selectedRoleButton}
-                        onPress={() => setRole('consultee')}
-                        onFocus={()=> styles.selectedRoleButton}
-                    >
-                        <Text style={styles.buttonText}>Consultee</Text>
-                    </TouchableOpacity>
-                </View>
-
+            <Text style={styles.body}>I want to be a</Text>
+            <View style={styles.roleContainer}>
                 <TouchableOpacity
-                    style={styles.button}
-                    onPress={
-                        () => onPressFunction()
-                    }
+                    style={(role === 'consultant') ? styles.roleButton : styles.selectedRoleButton}
+                    onPress={() => setRole('consultant')}
                 >
-                    <Text style={styles.buttonText}>Sign Up</Text>
+                    <Text style={styles.buttonText}>Consultant</Text>
                 </TouchableOpacity>
-
+                <TouchableOpacity
+                    style={(role === 'consultee') ? styles.roleButton : styles.selectedRoleButton}
+                    onPress={() => setRole('consultee')}
+                    onFocus={()=> styles.selectedRoleButton}
+                >
+                    <Text style={styles.buttonText}>Consultee</Text>
+                </TouchableOpacity>
             </View>
-            
-        // </DismissKeyboardView>
+
+            <TouchableOpacity
+                style={styles.button}
+                onPress={
+                    () => onPressFunction()
+                }
+            >
+                <Text style={styles.buttonText}>Sign Up</Text>
+            </TouchableOpacity>
+
+        </View>
     );
 }
 

@@ -3,11 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
+import LoginScreen from './LoginScreen';
+import HomeScreen from './HomeScreen';
 import WelcomePage from './Welcome';
 import SignupPage from './Signup';
 import ConsultantProfile from './ConsultantProfile';
 import ConsulteeProfile from './ConsulteeProfile';
 import PostSignup from './PostSignup';
+import ServiceScreen from './ServiceScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
@@ -34,6 +37,10 @@ export default function App() {
             initialParams={{setRegistered: setRegistered}}
           />
           <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+          />
+          <Stack.Screen
             name="ConsultantProfile"
             component={ConsultantProfile}
           />
@@ -44,6 +51,14 @@ export default function App() {
           <Stack.Screen
             name="PostSignup"
             component={PostSignup}
+          />
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+          />
+          <Stack.Screen
+            name="Service"
+            component={ServiceScreen}
           />
         </Stack.Navigator>
       </NavigationContainer>
