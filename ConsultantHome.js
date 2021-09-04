@@ -1,13 +1,19 @@
 import * as React from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import PersonDetails from './PersonDetails';
-import HomeScreen from './HomeScreen';
+
+function HomeScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>People Online</Text>
+    </View>
+  );
+}
 
 const Stack = createNativeStackNavigator();
 
-function App() {
+function ConsultantHome() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -15,21 +21,16 @@ function App() {
           name="Home"
           component={HomeScreen}
           options={{
-            title: 'People Online',
+            title: 'My home',
             headerStyle: {
               backgroundColor: '#f4511e',
             },
             headerTintColor: '#fff',
           }}
         />
-        <Stack.Screen
-          name="Details"
-          component={PersonDetails}
-        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
-
-export default App;
+export default ConsultantHome;
