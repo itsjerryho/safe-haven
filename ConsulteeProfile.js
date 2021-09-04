@@ -16,7 +16,7 @@ const GENDERS = [
   { label: "Prefer not to specify", value: "Prefer not to specify" },
 ];
 
-export const ConsulteeProfile = () => {
+const ConsulteeProfile = () => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("Male");
@@ -82,6 +82,8 @@ export const ConsulteeProfile = () => {
     </SafeAreaView>
   );
 };
+
+export default ConsulteeProfile
 
 const styles = StyleSheet.create({
   container: {
