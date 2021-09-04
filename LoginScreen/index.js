@@ -57,15 +57,15 @@ export const LoginScreen = () => {
           Invalid username/password! Please try again 😢
         </Text>
       )}
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.loginText}>Login</Text>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
       <View style={styles.redirectText}>
         <Text>Do not have an account? </Text>
         <TouchableOpacity
           onPress={() => console.log("Redirect to sign up screen")}
         >
-          <Text>Click here to sign up!</Text>
+          <Text style={styles.underlined}>Click here to sign up!</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -79,35 +79,41 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: "#ffffff",
   },
   header: {
     fontSize: 30,
-    fontStyle: "italic",
-    marginTop: 10,
-    marginBottom: 10,
+    color: "#687C15",
+    textAlign: "center",
+    marginTop: 50,
+    marginBottom: "2%",
     fontWeight: "bold",
   },
   textInput: {
-    width: 300,
-    height: 40,
-    margin: 10,
-    padding: 10,
-    borderWidth: 1,
-    borderRadius: 15,
+    width: "80%",
+    height: 50,
+    marginTop: "5%",
+    paddingLeft: 20,
+    borderWidth: 3,
+    borderColor: "#CBCBCB",
+    borderRadius: 50,
+    backgroundColor: "#ffffff",
   },
-  loginButton: {
-    height: 40,
-    width: 150,
-    borderWidth: 1,
-    borderRadius: 15,
-    marginTop: 10,
+  button: {
+    width: "50%",
+    height: 50,
+    backgroundColor: "#D1EBB1",
+    borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 30,
+    margin: 10,
   },
-  loginText: {
+  buttonText: {
     fontSize: 20,
+    color: "#687C15",
     textAlign: "center",
+    fontWeight: "bold",
   },
   errorText: {
     color: "red",
@@ -117,5 +123,8 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     marginTop: 20,
+  },
+  underlined: {
+    textDecorationLine: "underline",
   },
 });
