@@ -3,7 +3,10 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
-import ChatStack from './components/ChatComponent/ChatStack'
+import WelcomePage from './Welcome';
+import SignupPage from './Signup';
+import ConsultantProfile from './ConsultantProfile';
+
 
 export default function App() {
   const Tab = createBottomTabNavigator();
@@ -25,11 +28,11 @@ export default function App() {
           inactiveTintColor: "gray",
         }}
       >
-        <Tab.Screen name="Chat" component={ChatStack} />
-        {/* <Tab.Screen name="Wishlist" component={WishlistStack} />
-        <Tab.Screen name="Inbox" component={InboxScreen} />
-        <Tab.Screen name="Profile" component={LoginStack} />
-        <Tab.Screen name="ProfileScreen" component={ProfileStack} /> */}
+        <Tab.Screen name="Welcome" component={WelcomePage} />
+        <Tab.Screen name="Signup" component={SignupPage} />
+        <Tab.Screen name="ConsultantProfile" component={ConsultantProfile} />
+        
+      
       </Tab.Navigator>
     </NavigationContainer>
   );
