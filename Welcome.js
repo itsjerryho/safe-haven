@@ -1,8 +1,9 @@
+import { NavigationContainer } from "@react-navigation/native";
 import React, { Component } from "react";
 import { TouchableWithoutFeedback, Keyboard } from "react-native";
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from "react-native";
 
-const Welcome = () => {
+const Welcome = ({navigation, route}) => {
     
     return(
         <View style={styles.container}>
@@ -11,6 +12,7 @@ const Welcome = () => {
             <TouchableOpacity
                 onPress={() => {
                     console.log("pressed")
+                    navigation.navigate("Signup")
                 }} 
                 style={styles.signUpButton}
             >

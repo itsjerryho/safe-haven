@@ -3,8 +3,10 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
-import WelcomePage from './Welcome'
-import SignupPage from './Signup'
+import WelcomePage from './Welcome';
+import SignupPage from './Signup';
+import ConsultantProfile from './ConsultantProfile';
+
 
 export default function App() {
   const Tab = createBottomTabNavigator();
@@ -26,8 +28,10 @@ export default function App() {
           inactiveTintColor: "gray",
         }}
       >
-        {/* <Tab.Screen name="Welcome" component={WelcomePage} /> */}
-        <Tab.Screen name="Signup" component={SignupPage} />
+        {/* <Tab.Screen name="Welcome" component={WelcomePage} />
+        <Tab.Screen name="Signup" component={SignupPage} /> */}
+        <Tab.Screen name="ConsultantProfile" component={ConsultantProfile} />
+        
       
       </Tab.Navigator>
     </NavigationContainer>
