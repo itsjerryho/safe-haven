@@ -19,6 +19,10 @@ export default function App() {
           name="Welcome"
           component={WelcomePage}
         />
+        <Stack.Screen
+          name="Signup"
+          component={SignupPage}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
