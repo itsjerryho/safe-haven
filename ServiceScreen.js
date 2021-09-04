@@ -40,7 +40,7 @@ const Category = ({ item, onPress, backgroundColor, textColor, selected }) => (
   </TouchableOpacity>
 );
 
-export const ServiceScreen = ({ name }) => {
+const ServiceScreen = ({ name }) => {
   const [selectedId, setSelectedId] = useState(null);
   const [genderPreference, setGenderPreference] = useState("Male");
   const [open, setOpen] = useState(false);
@@ -178,3 +178,5 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
+
+export default ServiceScreen;

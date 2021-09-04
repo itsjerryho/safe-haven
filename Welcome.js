@@ -19,7 +19,13 @@ const Welcome = ({navigation, route}) => {
                 <Text style={styles.signUpText}>Sign Up</Text>
             </TouchableOpacity>
             <Text style={styles.loginText}>Already have an account?</Text>
-            <TouchableOpacity style={styles.loginButton}><Text style={styles.underlinedText}>Login here</Text></TouchableOpacity>
+            <TouchableOpacity 
+                style={styles.loginButton}
+                onPress={
+                    () => navigation.navigate("Login")
+                }>
+                <Text style={styles.underlinedText}>Login here</Text>
+            </TouchableOpacity>
         </View>
     );
     
