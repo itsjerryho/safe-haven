@@ -4,7 +4,7 @@
 
 Safe-Haven is a mobile app that aims to provides a safe and anonymous place to connect teenagers aged 12 - 17 years old with trained professionals to talk about their troubles. 
 
-Be it stress from studies, troubles with relationships or family, Safe Haven aims to provide an easy way for teenagers to connect to professionals to voice out their troubles on the go. 
+Be it stress from studies, facing troubles with relationships/family, Safe Haven aims to provide an easy way for teenagers to connect to professionals to voice out their troubles on the go. 
 
 We hope that by providing an listening ear and offering professional advices, they can feel better through voicing their thoughts out
 
